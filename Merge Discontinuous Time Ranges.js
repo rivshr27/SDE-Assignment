@@ -12,7 +12,6 @@ function mergeTimeRanges(ranges, threshold) {
 
   const thr = Number.isFinite(threshold) ? Math.max(0, threshold) : 0;
 
-  // Normalize and filter invalid intervals
   const arr = [];
   for (let i = 0; i < ranges.length; i++) {
     const r = ranges[i];
@@ -21,13 +20,13 @@ function mergeTimeRanges(ranges, threshold) {
     let s = Number(r[0]);
     let e = Number(r[1]);
     if (!Number.isFinite(s) || !Number.isFinite(e)) continue;
-    if (s > e) { const t = s; s = e; e = t; } // normalize
+    if (s > e) { const t = s; s = e; e = t; } 
 
     arr.push([s, e]);
   }
   if (arr.length === 0) return [];
 
-  // Sort by start asc, then end asc
+
   arr.sort((a, b) => (a[0] - b[0]) || (a[1] - b[1]));
 
   const result = [];
@@ -36,7 +35,7 @@ function mergeTimeRanges(ranges, threshold) {
   for (let i = 1; i < arr.length; i++) {
     const [s, e] = arr[i];
 
-    // Merge if overlapping/touching, or if gap is strictly smaller than threshold
+   
     if (s <= curE || (s - curE) < thr) {
       if (e > curE) curE = e;
     } else {
